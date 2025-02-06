@@ -1,3 +1,4 @@
+import { Link, NavLink } from "react-router-dom";
 
 
 export default function Header() {
@@ -7,7 +8,7 @@ export default function Header() {
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
                     <Link to="/" className="flex items-center">
                         <img
-                            src="https://alexharkness.com/wp-content/uploads/2020/06/logo-2.png"
+                            src="7.png"
                             className="mr-3 h-12"
                             alt="Logo"
                         />
@@ -33,15 +34,55 @@ export default function Header() {
                         <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                             <li>
                                 <NavLink
-                                    className={() =>
-                                        `block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                                    }
+                                to="/"
+                                className={({ isActive }) => 
+                                    isActive 
+                                        ? "block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-900 lg:p-0 underline"
+                                        : "block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-500 lg:p-0"
+                                }
+                                
                                 >
                                     Home
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink 
+                                to="/about"
+                                className={({isActive}) =>
+                                    isActive 
+                                    ?"block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-900 lg:p-0 underline"
+                                    :"block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-500 lg:p-0"
+                                }
+                                >
+                                    About
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                to="/contact"
+                                className={({isActive})=>
+                                isActive
+                                ?"block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-900 lg:p-0 underline"
+                                :"block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-500 lg:p-0"
+                                }
+                                >
+                                    Contact
+                                </NavLink>
+                            </li>
                             
-                            
+                            <li>
+                                <NavLink
+                                to="/github"
+                                className={({isActive})=>
+                                isActive
+                                ?"block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-900 lg:p-0 underline"
+                                :"block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-500 lg:p-0"
+                                }
+                                
+                                >
+                                    Github
+                                </NavLink>
+                            </li>
                         </ul>
                     </div>
                 </div>
