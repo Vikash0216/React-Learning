@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
+import { useToDo } from '../contexts'
 
-const ToDoList = (toDo) => {
+const ToDoList = ({toDo}) => {
+    const {deleteToDo,updateToDo,toggleCompleteToDo} = useToDo()
+
+    const[toDoMsg , settoDoMsg] = useState(toDo.toDo)
+    const[istoDoEditable , setIstoDoEditable] = useState(false)
+    
     const toggleCompleted = ()=>{
-
+        toggleCompleteToDo(toDo.id)
     }
 
-  const[istoDoEditable , setIstoDoEditable] = useState(false)
-  const deletetoDo = ()=>{
-
-  }
-  const[toDoMsg , settoDoMsg] = useState('Hello')
   const edittoDo = ()=>{
-    
+    updateToDo(toDo.id,{...toDo , toDo:toDoMsg})
+    setIstoDoEditable(false)
   }
 
   
@@ -53,7 +55,7 @@ const ToDoList = (toDo) => {
             {/* Delete toDo Button */}
             <button
                 className="inline-flex w-8 h-8 rounded-lg text-sm border border-black/10 justify-center items-center bg-gray-50 hover:bg-gray-100 shrink-0"
-                onClick={() => deletetoDo(toDo.id)}
+                onClick={() => deleteToDo(toDo.id)}
             >
                 ❌
             </button>
