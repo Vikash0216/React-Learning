@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
-export const toDoContext = createContext({
-    toDOs: [
+export const ToDoContext = createContext({
+    toDos: [
         {
             id: 1,
             toDo: "My first toDo",
@@ -16,8 +16,8 @@ export const toDoContext = createContext({
 }
 )
 
-export const toDoContextProvider = toDoContext.Provider
+export const ToDoContextProvider = ToDoContext.Provider
 
-export default function useToDO() {
-    return useContext(toDoContext)
+export  function useToDo() {
+    return useContext(ToDoContext)
 }
