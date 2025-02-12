@@ -10,7 +10,6 @@ const ToDoForm = () => {
     if(!toDo) return
     addToDo({toDo,isCompleted:false })
     setToDo("")
-    console.log("Hello");
   }
   return (
     <form onSubmit={submitToDo} className="flex">

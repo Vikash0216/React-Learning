@@ -53,11 +53,11 @@ function App() {
             <ToDoForm />
           </div>
           <div className="flex flex-wrap gap-y-3">
-            {toDos.map((todo) => {
-              <div key={todo.id} className="w-full">
-                <ToDoList toDo={todo} />
-              </div>;
-            })}
+            {toDos.map((toDo) => (
+              <div key={toDo.id} className="w-full">
+                <ToDoList toDo={toDo} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
