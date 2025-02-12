@@ -8,14 +8,14 @@ export const TodoContext = createContext({
         complete:false
     }],
     addToDo:()=>{},
-    updateToDo:()=>{},
+    editToDo:()=>{},
     deleteToDo:()=>{},
-    toogleCompleteToDO:()=>{}
+    toogleCompleteToDo:()=>{}
 })
 
 export const TodoContextProvider = TodoContext.Provider
 
-export default function useToDo(){
+export  function useToDo(){
     useContext(TodoContext)
 }
 
