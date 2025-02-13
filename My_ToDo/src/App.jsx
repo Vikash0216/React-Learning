@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { TodoContextProvider } from './contexts'
 import InputForm from './components/InputForm'
+import ToDoItem from './components/ToDoItem'
 
 
 function App() {
@@ -33,9 +34,9 @@ function App() {
  }
 
   useEffect(()=>{
-   const todos =  localStorage.getItem("allToDos")
-   if(todos && todos.length>0){
-    setAllToDos(JSON.parse(todos))
+   const todos =  JSON.parse(localStorage.getItem("allToDos"))
+   if(todos && todos.length >0){
+    setAllToDos(todos)
    }
   },[])
 
@@ -46,6 +47,12 @@ function App() {
   return (
     <TodoContextProvider value={{allTodos,addToDo,deleteToDo,editToDo,toogleCompleteToDo}}>
       <InputForm />
+      {allTodos.map((todo)=>(
+        <div key={todo.id}
+        className='w-full'>
+          <ToDoItem toDo={todo}/>
+        </div>
+      ))}
     </TodoContextProvider>
   )
 }

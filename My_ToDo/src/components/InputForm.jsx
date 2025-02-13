@@ -7,11 +7,10 @@ const InputForm = () => {
 
   const submitButton = (e) => {
     e.preventDefault();
-    if(!toDoText)return
-    addToDo({toDoText, complete:false})
-    setToDoText("")
+    if (!toDoText.trim()) return; // Prevent adding empty tasks
+    addToDo({ toDo: toDoText.trim(), complete: false }); // Fixed property name
+    setToDoText("");
   };
-
 
   return (
     <form
