@@ -4,24 +4,19 @@ import { createSlice,nanoid } from "@reduxjs/toolkit";
 const initialState = {
     toDos:[{
             id:1,
-            toDotext :"HelloWorld"
+            toDotext :"Enter"
         }]
 }
 const deleteToDo = (id)=>{
     setAllToDos((prevToDos)=>prevToDos.filter((todo)=> todo.id !== id))
   }
 
-  const editToDo = (id,toDo)=>{
-    setAllToDos((prevToDos)=>
-    prevToDos.map((todo)=>
-    todo.id === id ? toDo :todo
-    ))
-  }
 export const toDoSlice = createSlice({
     name:'toDo',
     initialState,
     reducers:{
         addToDo:(state , action)=>{
+            if (!action.payload.trim()) return;
            const toDo ={
             id:nanoid(),
             toDotext :action.payload
@@ -34,7 +29,9 @@ export const toDoSlice = createSlice({
         updateToDo:(state , action)=>{
             const {id, toDotext} = action.payload
            const todo = state.toDos.find((todo)=>todo.id === id)
-           if(todo) todo.toDotext = toDotext
+           if(todo && toDotext.trim()) {
+            todo.toDotext = toDotext
+           }
         }
 
     }
