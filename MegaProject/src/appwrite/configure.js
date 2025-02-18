@@ -51,21 +51,88 @@ export class Service {
         )
        } catch(error){
         console.log("Updae Post error",error);
-        return false
        }
     }
 
     async deletePost(slug){
         try{
-        return await this.databases.deleteDocument(
+         await this.databases.deleteDocument(
                 config.appwriteCollectionID,
                 config.appwriteCollectionID,
                 slug
             )
+            return true
         }
         catch(error){
             console.log('Delete Post error',error); 
+            return false;
         }
+    }
+
+    async getPost(slug){
+        try{
+         return await this.databases.getDocument(
+                config.appwriteDatabaseId,
+                config.appwriteCollectionID,
+                slug
+            )
+        }catch(error){
+            console.log("Get Post error for database",error);  
+            return false
+        }
+    }
+
+    async getPosts(){
+        try{
+          return  await this.databases.listDocuments(
+                config.appwriteCollectionID,
+                config.appwriteCollectionID
+                [Query.equal('status','active')]
+            )
+        }catch(error){
+            console.log("Get posts error from database");
+            return false;
+        }
+    }
+
+    // For file Upload
+
+    async uploadFile(file){
+        try{
+         return await this.bucket.createFile(
+                config.appwriteBucketId,
+                ID.unique(),
+                file
+            )
+        }catch(error){
+            console.log("Upload file error from database",error);
+            return false
+        }
+    }
+
+    async deleteFile(fileId){
+        try{
+            await this.bucket.deleteFile(
+                config.appwriteBucketId,
+                fileId
+            )
+            return true
+        }catch(error){
+            console.log("Deletefile error from database",error);  
+            return false          
+        }
+    }
+    previewFile(fileId){
+           return  this.bucket.getFilePreview(
+                config.appwriteBucketId,
+                fileId
+            ) 
+    }
+    downloadFile(fileId){
+        return this.bucket.getFileDownload(
+            config.appwriteBucketId,
+            fileId
+        )
     }
 }
 
