@@ -52,12 +52,14 @@ export class AuthService{
             throw error
         }
      }
-     async getUserStatus(){
+     async getCurrentUser(){
       try{
         return  await this.account.get()
       }catch(error){
-        throw error
+        console.log("Get  Current user error ",error);
+        
       }
+      return null
      }
 }
 
