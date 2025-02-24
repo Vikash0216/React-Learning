@@ -1,21 +1,26 @@
-import service from "../appwrite/configure"
-import {Link} from "react-router-dom"
+import service from "../appwrite/configure";
+import { Link } from "react-router-dom";
 
-
-function PostCard({$id,title, featuredImage}){
-    return(
-        <Link to={`/post/${$id}`}>
-        <div>
-            <div>
-                <img src={service.previewFile(featuredImage)} alt={title} />
-            </div>
-            <div>
-                <h3>{title}</h3>
-            </div>
+function PostCard({ $id, title, featuredImage }) {
+  return (
+    <Link to={`/post/${$id}`} className="block">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden transition hover:shadow-lg">
+        {/* Image Section */}
+        <div className="w-full h-52 overflow-hidden">
+          <img
+            src={service.previewFile(featuredImage)}
+            alt={title}
+            className="w-full h-full object-cover"
+          />
         </div>
-        </Link>
-    )
 
+        {/* Title Section */}
+        <div className="p-4">
+          <h3 className="text-lg font-semibold text-gray-800 truncate">{title}</h3>
+        </div>
+      </div>
+    </Link>
+  );
 }
 
-export default PostCard
+export default PostCard;
