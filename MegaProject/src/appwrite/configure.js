@@ -51,13 +51,14 @@ export class Service {
         )
        } catch(error){
         console.log("Updae Post error",error);
+        return false;
        }
     }
 
     async deletePost(slug){
         try{
          await this.databases.deleteDocument(
-                config.appwriteCollectionID,
+                config.appwriteDatabaseId,
                 config.appwriteCollectionID,
                 slug
             )
@@ -69,31 +70,39 @@ export class Service {
         }
     }
 
-    async getPost(slug){
-        try{
-         return await this.databases.getDocument(
+    async getPost(slug) {
+        try {
+            if (!slug) {
+                throw new Error("Invalid slug: Slug is required.");
+            }
+    
+            const post = await this.databases.getDocument(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionID,
                 slug
-            )
-        }catch(error){
-            console.log("Get Post error for database",error);  
-            return false
+            );
+    
+            return post;
+        } catch (error) {
+            console.log("Error fetching post:", error); // More detailed error logging
+            return null; // Can be changed to `false` if preferred
         }
     }
+    
 
-    async getPosts(){
-        try{
-          return  await this.databases.listDocuments(
+    async getPosts() {
+        try {
+            return await this.databases.listDocuments(
+                config.appwriteDatabaseId,
                 config.appwriteCollectionID,
-                config.appwriteCollectionID
-                [Query.equal('status','active')]
-            )
-        }catch(error){
-            console.log("Get posts error from database");
+                [Query.equal("status", "active")] // ✅ Corrected array syntax
+            );
+        } catch (error) {
+            console.log("Error fetching posts from database:", error); // ✅ Improved error logging
             return false;
         }
     }
+    
 
     // For file Upload
 

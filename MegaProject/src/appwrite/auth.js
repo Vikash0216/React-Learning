@@ -10,7 +10,7 @@ export class AuthService{
      constructor (){
         this.client
         .setEndpoint(config.appwriteUrl)
-        .setEndpoint(config.appwriteProjectId)
+        .setProject(config.appwriteProjectId)
         this.account = new Account(this.client)
      }
 
@@ -24,13 +24,11 @@ export class AuthService{
                 password,
                 name
             )
-            if(user){
-                // Call login function
-                return this.login(email , password)
+            if (user) {
+              await this.login(email, password);
+              return user; // Return the created user
             }
-            else{
-                return user
-            }
+            return null;            
         } catch(error){
             throw error;
         };
@@ -38,29 +36,37 @@ export class AuthService{
 
 
      async login(email ,password){
-        try{
-          return  await this.account.createEmailPasswordSession(email, password)
-        } catch(error){
-            throw error
+      try {
+         const session = await this.account.createEmailPasswordSession(email, password);
+         if (session) {
+             const user = await this.getCurrentUser(); // Fetch user immediately after login
+             return { session, user }; // Return both session and user details
+         }
+         throw new Error("Session could not be created.")}
+         catch (error) {
+            console.log("Login failed:", error.message);
+            throw new Error("Invalid email or password. Please try again.");
         }
      }
 
      async logout(){
         try{
-           return await this.account.deleteSessions()
+           await this.account.deleteSessions('current')
+           return true
         }catch(error){
-            throw error
+         console.log("Logout failed:", error.message);
+         return false; 
         }
      }
-     async getCurrentUser(){
-      try{
-        return  await this.account.get()
-      }catch(error){
-        console.log("Get  Current user error ",error);
-        
+     async getCurrentUser() {
+      try {
+          return await this.account.get();
+      } catch (error) {
+          console.log("Error fetching current user:", error.message);
       }
-      return null
-     }
+      return null;
+   }
+   
 }
 
 const authService = new AuthService()

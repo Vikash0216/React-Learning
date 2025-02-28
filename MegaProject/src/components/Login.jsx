@@ -13,20 +13,30 @@ function Login() {
   const { register, handleSubmit } = useForm();
 
   const login = async (data) => {
-    setError("");
+    setError(""); 
+
     try {
-      const session = await authService.login(data);
-      if (session) {
-        const userData = await authService.getCurrentUser();
-        if (userData) {
-          dispatch(authLogin(userData));
-          navigate("/");
+        const session = await authService.login(data.email, data.password);
+        
+        if (session) {
+      
+            await new Promise((resolve) => setTimeout(resolve, 100));
+
+            const userData = await authService.getCurrentUser();
+            if (userData) {
+                dispatch(authLogin(userData)); 
+                navigate("/");
+            } else {
+                setError("Failed to fetch user details. Please try again.");
+            }
+        } else {
+            setError("Login failed. No session returned.");
         }
-      }
     } catch (error) {
-      setError(error.message);
+        console.error("Login error:", error); 
+        setError(error.message || "An unexpected error occurred.");
     }
-  };
+};
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">

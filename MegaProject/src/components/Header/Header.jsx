@@ -1,11 +1,12 @@
 import { Container, LogoutBtn, Logo } from "../index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
+
+  console.log(authStatus); // ✅ Corrected Debug Log
 
   const navItems = [
     {
@@ -30,31 +31,43 @@ const Header = () => {
     },
     {
       name: "Add Posts",
-      slug: "/add-posts",
+      slug: "/add-post",
       active: authStatus,
     },
   ];
+
   return (
-    <header className="py-3 bg-gray-600 shadow">
+    <header className="py-4 bg-gray-700 shadow-md text-white">
       <Container>
-        <nav className="flex">
-          <div className="mr-4">
+        <nav className="flex items-center justify-between">
+          {/* Logo Section */}
+          <div>
             <Link to="/">
-              <Logo width="120px" />
+              <Logo width="50px" />
             </Link>
           </div>
-          <ul className="flex ml-auto">
-            {navItems.map((item) =>
-              item.active ? (
-                <li key={item.name}>
-                  <button onClick={() => navigate(item.slug)}>
-                    {item.name}
-                  </button>
-                </li>
-              ) : null
+
+          {/* Navigation Links */}
+          <ul className="flex items-center space-x-6">
+            {navItems.map(
+              (item) =>
+                item.active && (
+                  <li key={item.name}>
+                    <button
+                      onClick={() => navigate(item.slug)}
+                      className="px-4 py-2 hover:bg-gray-600 rounded transition"
+                    >
+                      {item.name}
+                    </button>
+                  </li>
+                )
             )}
+
+            {/* Logout Button for Authenticated Users */}
             {authStatus && (
-                <li>{LogoutBtn}</li>
+              <li>
+                <LogoutBtn />
+              </li>
             )}
           </ul>
         </nav>
